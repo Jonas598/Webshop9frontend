@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="px-22 h-[10vh] w-full flex items-center justify-between">
+    <div className=" px-7 sm:px-22 h-[10vh] w-full flex items-center justify-between">
       <div
         className="flex items-center justify-center cursor-pointer"
         onClick={() => {

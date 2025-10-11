@@ -21,15 +21,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 
+import allContext from "../../contexts/allContext";
+import { useContext, useEffect } from "react";
+
 export default function ProfileDropDown() {
   const navigate = useNavigate();
+
+  const context = useContext(allContext);
+  const { fetchUserData, fetchedUserData } = context;
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src="./avatar.jpg" alt="Profile image" />
-            <AvatarFallback>VM</AvatarFallback>
+            <AvatarFallback>
+              <img src="src/assets/userLogo.png" alt="" />
+            </AvatarFallback>
           </Avatar>
           <ChevronDownIcon
             size={16}
@@ -41,58 +52,50 @@ export default function ProfileDropDown() {
       <DropdownMenuContent className="max-w-64">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="text-foreground truncate text-sm font-medium">
-            Admin
+            {fetchedUserData.name}
           </span>
           <span className="text-muted-foreground truncate text-xs font-normal">
-            admin@admin.com
+            {fetchedUserData.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <div
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              Profile
-            </div>
+            <div>Profile</div>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              navigate("/cart");
+            }}
+          >
             <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <div
-              onClick={() => {
-                navigate("/cart");
-              }}
-            >
-              Cart
-            </div>
+            <div>Cart</div>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              navigate("/about");
+            }}
+          >
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <div
-              onClick={() => {
-                navigate("/about");
-              }}
-            >
-              About
-            </div>
+            <div>About</div>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup></DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            localStorage.removeItem("webshopAuthtoken");
+            navigate("/signup");
+          }}
+        >
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-          <div
-            onClick={() => {
-              localStorage.removeItem("webshopAuthtoken");
-              navigate("/signup");
-            }}
-          >
-            Logout
-          </div>
+          <div>Logout</div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
