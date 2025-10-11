@@ -12,12 +12,14 @@ const Home = () => {
     fetchAllProducts,
     fetchedAllProducts,
     fetchUserCart,
+    fetchedUserCart,
     addToCart,
     deleteFromCart,
     fetchUserData,
     fetchedUserData,
   } = context;
   useEffect(() => {
+    fetchUserCart();
     fetchUserData();
     fetchAllProducts();
   }, []);
@@ -29,7 +31,7 @@ const Home = () => {
       {fetchedAllProducts.map((product) => {
         let temp = 0;
 
-        fetchedUserData.cartData.map((cartItem) => {
+        fetchedUserCart.map((cartItem) => {
           if (cartItem.itemId == product._id) {
             temp = cartItem.quantity;
           }
