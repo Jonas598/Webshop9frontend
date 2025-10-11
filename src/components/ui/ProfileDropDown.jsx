@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 import allContext from "../../contexts/allContext";
 import { useContext, useEffect } from "react";
+import userLogo from "/assets/userLogo.png";
 
 export default function ProfileDropDown() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function ProfileDropDown() {
           <Avatar>
             <AvatarImage src="./avatar.jpg" alt="Profile image" />
             <AvatarFallback>
-              <img src="src/assets/userLogo.png" alt="" />
+              <img src={userLogo} alt="" />
             </AvatarFallback>
           </Avatar>
           <ChevronDownIcon

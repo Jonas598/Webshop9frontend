@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileDropDown from "./ui/ProfileDropDown.jsx";
 import { useNavigate } from "react-router-dom";
+import logo from '/assets/logo.png'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Header = () => {
           navigate("/");
         }}
       >
-        <img className="h-[60px] w-[60px]" src="/src/assets/logo.png" alt="" />
+        <img className="h-[60px] w-[60px]" src={logo} alt="" />
         <h1 className="text-2xl font-bold ">Seedo</h1>
       </div>
       {localStorage.getItem("webshopAuthtoken") ? (

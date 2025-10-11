@@ -5,6 +5,7 @@ import { MinusIcon, PlusIcon } from "lucide-react";
 import ProductCard from "./ProductCard";
 import allContext from "../contexts/allContext";
 import { useContext, useEffect, useState } from "react";
+import product from '/assets/product.png'
 
 const Home = () => {
   const context = useContext(allContext);
@@ -42,7 +43,7 @@ const Home = () => {
             <div className="m-auto">
               <img
                 className="h-[150px] w-[250px]"
-                src="src/assets/product.png"
+                src="/assets/product.png"
                 alt=""
               />
             </div>

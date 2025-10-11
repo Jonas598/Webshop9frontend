@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import allContext from "../contexts/allContext";
 import { useContext, useEffect } from "react";
+import userLogo from '/assets/userLogo.png'
+
 
 const Profile = () => {
   const context = useContext(allContext);
@@ -16,7 +18,7 @@ const Profile = () => {
     <div className="h-[80vh] w-full flex flex-col items-center justify-center">
       <div className="border p-2 rounded-lg">
         <div className="h-[80px] w-[80px] flex items-center justify-center m-auto">
-          <img src="src/assets/userLogo.png" alt="" />
+          <img src={userLogo} alt="" />
         </div>
         <div className="px-6 pt-4 pb-6">
           <form className="space-y-4">

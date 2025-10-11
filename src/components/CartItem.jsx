@@ -1,6 +1,7 @@
 import React from "react";
 import allContext from "../contexts/allContext";
 import { useContext, useEffect, useState, useId } from "react";
+import product from '/assets/product.png'
 
 const CartItem = (props) => {
   const context = useContext(allContext);
@@ -36,7 +37,7 @@ const CartItem = (props) => {
       <div>
         <img
           className="h-[80px] w-[100px]"
-          src="src/assets/product.png"
+          src={product}
           alt=""
         />
       </div>
