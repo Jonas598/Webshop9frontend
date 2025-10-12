@@ -74,7 +74,7 @@ export default function ProfileDropDown() {
               navigate("/cart");
             }}
           >
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
+            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <div>Cart</div>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -82,8 +82,8 @@ export default function ProfileDropDown() {
               navigate("/about");
             }}
           >
-            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <div>About</div>
+            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
+            <div>Orders</div>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

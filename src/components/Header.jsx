@@ -25,8 +25,9 @@ const Header = () => {
           <ProfileDropDown />
         </div>
       ) : (
-        <div className="border border-black py-1 px-2 rounded-lg">
-          <a href="/signup"> Login / Signup</a>
+        <div className="">
+          <a className="border border-black py-1 px-2 rounded-lg m-2" href="/signup"> Signup</a>
+          <a className="border border-black py-1 px-2 rounded-lg m-2" href="/login"> Login </a>
         </div>
       )}
     </div>

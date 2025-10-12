@@ -151,6 +151,28 @@ export default function AllState(props) {
     }
   };
 
+  //updateuserdata
+  const updateuser = async (userInfo) => {
+    const apires = await fetch(`${baseUrl}/v1/api/auth/updateuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authtoken":localStorage.getItem("webshopAuthtoken")
+      },
+      body: JSON.stringify({
+        name: userInfo.name,
+        address: userInfo.address,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      console.log(jsonres.message);
+      
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
   //Fetch user Data
   const fetchUserData = async () => {
     const apires = await fetch(`${baseUrl}/v1/api/auth/fetchuser`, {
@@ -183,6 +205,7 @@ export default function AllState(props) {
         deleteFromCart,
         fetchProductById,
         singleProduct,
+        updateuser,
       }}
     >
       {props.children}
