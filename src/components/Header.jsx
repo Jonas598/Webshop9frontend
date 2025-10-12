@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileDropDown from "./ui/ProfileDropDown.jsx";
 import { useNavigate } from "react-router-dom";
-import logo from '/assets/logo.png'
+import logo from "/assets/logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,7 +10,11 @@ const Header = () => {
       <div
         className="flex items-center justify-center cursor-pointer"
         onClick={() => {
-          navigate("/");
+          if (localStorage.getItem("webshopAuthtoken")) {
+            navigate("/home");
+          } else {
+            navigate("/");
+          }
         }}
       >
         <img className="h-[60px] w-[60px]" src={logo} alt="" />
