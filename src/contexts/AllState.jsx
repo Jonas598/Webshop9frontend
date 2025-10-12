@@ -4,7 +4,6 @@ import AllContext from "./allContext.jsx";
 export default function AllState(props) {
   const baseUrl = "https://webshop9backend.onrender.com";
   // const baseUrl = "http://localhost:3000";
-  
 
   const [fetchedAllProducts, setFetchedAllProducts] = useState([]);
   const [fetchedUserData, setFetchedUserData] = useState({});
@@ -25,15 +24,17 @@ export default function AllState(props) {
     const jsonres = await apires.json();
     if (jsonres.sucess) {
       setFetchedAllProducts(jsonres.products);
-      return jsonres.products
+      return jsonres.products;
     } else {
       alert(jsonres.error);
     }
   };
 
   //fetch product by id
-  const [singleProduct,setSingleProduct]=useState({});
+  const [singleProduct, setSingleProduct] = useState({});
   const fetchProductById = async (itemId) => {
+    console.log(itemId);
+    
     const apires = await fetch(`${baseUrl}/v1/api/product/fetchProductById`, {
       method: "POST",
       headers: {
@@ -45,9 +46,85 @@ export default function AllState(props) {
     });
     const jsonres = await apires.json();
     if (jsonres.sucess) {
+      console.log(jsonres.products);
+       setSingleProduct(jsonres.products);
       // console.log(jsonres.products);
-      // setSingleProduct(jsonres.products);
       return jsonres.products;
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+  //add Product
+  const addProduct = async (productInfo) => {
+    const { name, desc, weight, price, avl_peices } = productInfo;
+    const apires = await fetch(`${baseUrl}/v1/api/product/addProduct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        desc,
+        weight,
+        price,
+        avl_peices,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      console.log(jsonres.msg);
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
+  //delete Product
+  const deleteProduct = async (id) => {
+    const apires = await fetch(`${baseUrl}/v1/api/product/deleteProduct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      console.log(jsonres.message);
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
+  //update product
+  const updateProduct = async (productInfo) => {
+    const apires = await fetch(`${baseUrl}/v1/api/product/updateproduct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: productInfo.id,
+        name: productInfo.name,
+        desc: productInfo.desc,
+        weight: productInfo.weight,
+        price: productInfo.price,
+        avl_peices: productInfo.avl_peices,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      console.log(jsonres.msg);
     } else {
       alert(jsonres.error);
     }
@@ -159,7 +236,7 @@ export default function AllState(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "authtoken":localStorage.getItem("webshopAuthtoken")
+        authtoken: localStorage.getItem("webshopAuthtoken"),
       },
       body: JSON.stringify({
         name: userInfo.name,
@@ -169,7 +246,6 @@ export default function AllState(props) {
     const jsonres = await apires.json();
     if (jsonres.sucess) {
       console.log(jsonres.message);
-      
     } else {
       alert(jsonres.error);
     }
@@ -208,6 +284,9 @@ export default function AllState(props) {
         fetchProductById,
         singleProduct,
         updateuser,
+        addProduct,
+        deleteProduct,
+        updateProduct,
       }}
     >
       {props.children}

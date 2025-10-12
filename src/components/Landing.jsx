@@ -10,12 +10,12 @@ const Landing = () => {
   }
   return (
    
-    <div className="h-[80vh] w-full flex  items-center justify-center">
+    <div className="h-[80vh] w-full flex flex-col sm:flex-rows items-center justify-center">
       <div className="flex">
         <img src={logo} alt="" />
       </div>
       <div className="flex flex-col items-center justify-center gap-7">
-        <h1 className="text-6xl font-bold">Web Shop to Buy Seeds</h1>
+        <h1 className="text-6xl font-bold text-center">Web Shop to Buy Seeds</h1>
         <div className="flex gap-4">
           <Button
             onClick={() => {
