@@ -3,6 +3,8 @@ import AllContext from "./allContext.jsx";
 
 export default function AllState(props) {
   const baseUrl = "https://webshop9backend.onrender.com";
+  // const baseUrl = "http://localhost:3000";
+  
 
   const [fetchedAllProducts, setFetchedAllProducts] = useState([]);
   const [fetchedUserData, setFetchedUserData] = useState({});

@@ -33,7 +33,7 @@ const CartItem = (props) => {
   }, []);
 
   return (
-    <div className="flex border rounded-lg m-3 p-1 h-20 w-70 gap-4">
+    <div className="flex border rounded-lg m-3 p-1 h-25 w-70 gap-4">
       <div>
         <img
           className="h-[80px] w-[100px]"
@@ -47,6 +47,8 @@ const CartItem = (props) => {
           <sup>{temp.weight} grams</sup>
         </h3>
         <h1 className=" text-sm font-bold"> € {temp.price}</h1>
+              <h4 className=""><sup className="text-green-700 font-semibold">{temp.avl_peices} peices left !</sup></h4>
+
       </div>
     </div>
   );

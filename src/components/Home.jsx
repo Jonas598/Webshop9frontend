@@ -101,6 +101,7 @@ navigate("/")
                   </Button>
                 </div>
               </div>
+              <h4 className="ml-1"><sup className="text-green-700 font-semibold">{product.avl_peices} peices left !</sup></h4>
             </div>
           </Card>
         );

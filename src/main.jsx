@@ -11,6 +11,7 @@ import Login from "./components/Login.jsx";
 import AllState from "./contexts/AllState.jsx";
 import Profile from "./components/Profile.jsx";
 import Landing from "./components/Landing.jsx";
+import AdminHome from "./components/AdminHome.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "adminhome",
+        element: <AdminHome />,
       },
     ],
   },
