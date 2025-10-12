@@ -44,7 +44,7 @@ const handleSubmit = async (e) => {
       alert("Password Should Be 6 Charecters or More !!");
     } else {
       await userSignUp(userInfo);
-      navigate('/');
+      navigate('/home');
       window.location.reload(false);
     }
   };

@@ -35,7 +35,7 @@ export default function Login() {
       alert("Password Should Be 6 Charecters or More !!");
     } else {
       await userLogin(userInfo);
-      navigate("/");
+      navigate("/home");
       window.location.reload(false);
     }
   };

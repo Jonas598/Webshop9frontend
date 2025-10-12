@@ -6,8 +6,11 @@ import ProductCard from "./ProductCard";
 import allContext from "../contexts/allContext";
 import { useContext, useEffect, useState } from "react";
 import product from '/assets/product.png'
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+  const navigate = useNavigate()
   const context = useContext(allContext);
   const {
     fetchAllProducts,
@@ -24,6 +27,10 @@ const Home = () => {
     fetchUserData();
     fetchAllProducts();
   }, []);
+
+  if(!localStorage.getItem("webshopAuthtoken")){
+navigate("/")
+  }
 
   return (
     // <div className='h-[80vh] w-full flex items-center justify-center '>

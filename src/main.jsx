@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import AllState from "./contexts/AllState.jsx";
 import Profile from "./components/Profile.jsx";
+import Landing from "./components/Landing.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        element: <Landing />,
+      },
+      {
+        path: "/home",
         element: <Home />,
       },
       {
