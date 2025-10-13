@@ -46,18 +46,18 @@ const Cart = () => {
   }, [fetchedUserCart]);
 
   const orderInfo = {
-    userId:fetchedUserData._id,
-    name:fetchedUserData.name,
-    email:fetchedUserData.email,
-    address:fetchedUserData.address,
-    total_price:totalPrice.toFixed(2),
-    order_status:'Confirmed',
-    products:fetchedUserCart,
+    userId: fetchedUserData._id,
+    name: fetchedUserData.name,
+    email: fetchedUserData.email,
+    address: fetchedUserData.address,
+    total_price: totalPrice.toFixed(2),
+    order_status: "Confirmed",
+    products: fetchedUserCart,
   };
-  const handleCheckout = async(e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     console.log(orderInfo);
-    await createOrder(orderInfo)
+    await createOrder(orderInfo);
     navigate("/order-success");
   };
 
@@ -69,7 +69,10 @@ const Cart = () => {
         <p>Loading your cart...</p>
       ) : fetchedUserCart.length === 0 ||
         fetchedUserCart.every((item) => item.quantity === 0) ? (
-        <p>Your cart is empty.</p>
+        <div className="m-20 h-60 w-45 flex items-center justify-center border rounded-lg">
+          {" "}
+          <p className="font-bold">Your cart is empty.</p>
+        </div>
       ) : (
         <>
           <div className="flex flex-col gap-4 w-full max-w-3xl">

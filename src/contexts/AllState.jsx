@@ -9,6 +9,7 @@ export default function AllState(props) {
   const [fetchedUserData, setFetchedUserData] = useState({});
 
   useEffect(() => {
+    getallorders();
     fetchAllProducts();
     fetchUserData();
   }, []);
@@ -296,6 +297,7 @@ export default function AllState(props) {
   };
 
   //Get All Orders
+  const [allOrders, setAllOrders] = useState([]);
   const getallorders = async () => {
     const apires = await fetch(`${baseUrl}/v1/api/cart/getallorders`, {
       method: "GET",
@@ -306,7 +308,8 @@ export default function AllState(props) {
     });
     const jsonres = await apires.json();
     if (jsonres.sucess) {
-      return jsonres.orderHistory;
+      setAllOrders(jsonres.OrderData);
+      return jsonres.OrderData;
     } else {
       alert(jsonres.error);
     }
@@ -353,7 +356,8 @@ export default function AllState(props) {
         updateProduct,
         createOrder,
         getallorders,
-        getsingleorder
+        getsingleorder,
+        allOrders,
       }}
     >
       {props.children}
