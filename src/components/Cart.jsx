@@ -11,6 +11,7 @@ const Cart = () => {
     fetchProductById,
     fetchUserData,
     fetchedUserData,
+    createOrder,
   } = useContext(allContext);
 
   const [totalPrice, setTotalPrice] = useState(0);
@@ -44,7 +45,19 @@ const Cart = () => {
     }
   }, [fetchedUserCart]);
 
-  const handleCheckout = () => {
+  const orderInfo = {
+    userId:fetchedUserData._id,
+    name:fetchedUserData.name,
+    email:fetchedUserData.email,
+    address:fetchedUserData.address,
+    total_price:totalPrice.toFixed(2),
+    order_status:'Confirmed',
+    products:fetchedUserCart,
+  };
+  const handleCheckout = async(e) => {
+    e.preventDefault();
+    console.log(orderInfo);
+    await createOrder(orderInfo)
     navigate("/order-success");
   };
 
@@ -54,7 +67,8 @@ const Cart = () => {
 
       {loading ? (
         <p>Loading your cart...</p>
-      ) : fetchedUserCart.length === 0 || fetchedUserCart.every(item => item.quantity === 0) ? (
+      ) : fetchedUserCart.length === 0 ||
+        fetchedUserCart.every((item) => item.quantity === 0) ? (
         <p>Your cart is empty.</p>
       ) : (
         <>
@@ -93,7 +107,7 @@ const Cart = () => {
 
           <button
             onClick={handleCheckout}
-            className="w-full max-w-3xl mt-4 py-3 bg-green-600 text-white font-bold text-lg rounded-lg hover:bg-green-700 transition-colors"
+            className="w-full max-w-3xl mt-4 py-3 bg-black text-white font-bold text-lg rounded-lg hover:bg-gray-900 transition-colors"
           >
             Buy
           </button>

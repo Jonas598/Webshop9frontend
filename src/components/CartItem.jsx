@@ -30,7 +30,7 @@ const CartItem = ({ itemId, quantity }) => {
     <div className="flex items-center w-full p-4 bg-white border border-gray-200 rounded-lg shadow-md gap-6">
       {/* Bild */}
       <img
-        className="h-24 w-24 object-cover rounded-md" // Etwas größer und mit abgerundeten Ecken
+        className="h-24 w-24 object-contain rounded-md" // Etwas größer und mit abgerundeten Ecken
         src={productImg}
         alt={product.name}
       />

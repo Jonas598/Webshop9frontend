@@ -33,8 +33,8 @@ export default function AllState(props) {
   //fetch product by id
   const [singleProduct, setSingleProduct] = useState({});
   const fetchProductById = async (itemId) => {
-    console.log(itemId);
-    
+    // console.log(itemId);
+
     const apires = await fetch(`${baseUrl}/v1/api/product/fetchProductById`, {
       method: "POST",
       headers: {
@@ -46,22 +46,14 @@ export default function AllState(props) {
     });
     const jsonres = await apires.json();
     if (jsonres.sucess) {
-      console.log(jsonres.products);
-       setSingleProduct(jsonres.products);
+      // console.log(jsonres.products);
+      setSingleProduct(jsonres.products);
       // console.log(jsonres.products);
       return jsonres.products;
     } else {
       alert(jsonres.error);
     }
   };
-
-
-
-
-
-
-
-
 
   //add Product
   const addProduct = async (productInfo) => {
@@ -268,6 +260,78 @@ export default function AllState(props) {
     }
   };
 
+  // create order
+  const createOrder = async (orderInfo) => {
+    const {
+      userId,
+      name,
+      email,
+      address,
+      total_price,
+      order_status,
+      products,
+    } = orderInfo;
+    const apires = await fetch(`${baseUrl}/v1/api/cart/order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authtoken: localStorage.getItem("webshopAuthtoken"),
+      },
+      body: JSON.stringify({
+        userId,
+        name,
+        email,
+        address,
+        total_price,
+        order_status,
+        products,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      return jsonres.data;
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
+  //Get All Orders
+  const getallorders = async () => {
+    const apires = await fetch(`${baseUrl}/v1/api/cart/getallorders`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authtoken: localStorage.getItem("webshopAuthtoken"),
+      },
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      return jsonres.orderHistory;
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
+  //Get Order by id
+  const getsingleorder = async (orderId) => {
+    const apires = await fetch(`${baseUrl}/v1/api/cart/getsingleorder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authtoken: localStorage.getItem("webshopAuthtoken"),
+      },
+      body: JSON.stringify({
+        orderId,
+      }),
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      return jsonres.orderDetails;
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
   return (
     <AllContext.Provider
       value={{
@@ -287,6 +351,9 @@ export default function AllState(props) {
         addProduct,
         deleteProduct,
         updateProduct,
+        createOrder,
+        getallorders,
+        getsingleorder
       }}
     >
       {props.children}
