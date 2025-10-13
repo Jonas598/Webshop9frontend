@@ -79,7 +79,7 @@ export default function ProfileDropDown() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              navigate("/about");
+              navigate("/orders");
             }}
           >
             <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />

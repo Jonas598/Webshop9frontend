@@ -1,57 +1,104 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import allContext from "../contexts/allContext";
-import { useContext, useEffect, useState, useId } from "react";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  let id = 0;
-  const context = useContext(allContext);
+  const navigate = useNavigate(); // Initialize useNavigate
   const {
-    fetchAllProducts,
-    fetchedAllProducts,
     fetchUserCart,
     fetchedUserCart,
-    addToCart,
-    deleteFromCart,
+    fetchProductById,
     fetchUserData,
     fetchedUserData,
-    fetchProductById,
-  } = context;
-  const [userCart, setUserCart] = useState([]);
+  } = useContext(allContext);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchUserCart();
+    fetchUserData();
   }, []);
 
-  const [cartTotal, setCartTotal] = useState([]);
+  useEffect(() => {
+    const calculateTotal = async () => {
+      setLoading(true);
+      let total = 0;
+      for (const item of fetchedUserCart) {
+        if (item.quantity > 0) {
+          const product = await fetchProductById(item.itemId);
+          if (product) {
+            total += product.price * item.quantity;
+          }
+        }
+      }
+      setTotalPrice(total);
+      setLoading(false);
+    };
+
+    if (fetchedUserCart.length > 0) {
+      calculateTotal();
+    } else {
+      setLoading(false);
+    }
+  }, [fetchedUserCart]);
+
+  const handleCheckout = () => {
+    navigate("/order-success");
+  };
 
   return (
-    <div className=" flex flex-col items-center justify-center gap-8">
-      <h1 className="font-bold text-6xl"> Cart</h1>
-      <div className=" border rounded-lg grid grid-cols-1 sm:grid-cols-3 p-3 sm:p-8 ">
-        {fetchedUserCart.map((eachCartItem) => {
-          if (eachCartItem.quantity != 0) {
-            id++;
-            return (
-              <div
-                key={id}
-                className="flex items-center justify-center"
-              >
-                <div>
+    <div className="flex flex-col items-center justify-center gap-8 my-10 px-4">
+      <h1 className="font-bold text-6xl">Cart</h1>
+
+      {loading ? (
+        <p>Loading your cart...</p>
+      ) : fetchedUserCart.length === 0 || fetchedUserCart.every(item => item.quantity === 0) ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          <div className="flex flex-col gap-4 w-full max-w-3xl">
+            {fetchedUserCart.map((eachCartItem) => {
+              if (eachCartItem.quantity !== 0) {
+                return (
                   <CartItem
+                    key={eachCartItem.itemId}
                     itemId={eachCartItem.itemId}
-                    setCartTotal={setCartTotal}
-                    cartTotal={cartTotal}
                     quantity={eachCartItem.quantity}
-                  />{" "}
-                </div>
-                <div className="text-2xl font-bold">
-                  x {eachCartItem.quantity}
-                </div>
+                  />
+                );
+              }
+              return null;
+            })}
+          </div>
+
+          {/* Shipping Information */}
+          {fetchedUserData && (
+            <div className="w-full max-w-3xl mt-6 p-4 bg-gray-50 border rounded-lg">
+              <h2 className="text-xl font-semibold mb-2">Shipping to:</h2>
+              <div className="text-gray-700">
+                <p className="font-bold">{fetchedUserData.name}</p>
+                <p>{fetchedUserData.address}</p>
+                <p>{fetchedUserData.email}</p>
               </div>
-            );
-          }
-        })}
-      </div>
+            </div>
+          )}
+
+          {/* Total Price Display */}
+          <div className="w-full max-w-3xl mt-6 p-4 bg-gray-100 rounded-lg flex justify-between items-center">
+            <h2 className="text-2xl font-semibold">Total</h2>
+            <p className="text-3xl font-bold">€ {totalPrice.toFixed(2)}</p>
+          </div>
+
+          <button
+            onClick={handleCheckout}
+            className="w-full max-w-3xl mt-4 py-3 bg-green-600 text-white font-bold text-lg rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Buy
+          </button>
+        </>
+      )}
     </div>
   );
 };

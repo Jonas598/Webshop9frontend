@@ -12,6 +12,8 @@ import AllState from "./contexts/AllState.jsx";
 import Profile from "./components/Profile.jsx";
 import Landing from "./components/Landing.jsx";
 import AdminHome from "./components/AdminHome.jsx";
+import OrderConfirmation from "./components/OrderConfirmation.jsx";
+import Orders from "./components/Orders.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
         path: "adminhome",
         element: <AdminHome />,
       },
+      {
+        path: "order-success",
+        element: <OrderConfirmation />,
+      },
+      {
+        path: "orders",
+        element: <Orders />,
+      }
     ],
   },
 ]);
