@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import allContext from "../contexts/allContext";
+import allContext from "../contexts/allContext.jsx";
+import OrderedProducts from "./OrderedProducts.jsx";
 
 const Orders = () => {
   const { getallorders, getsingleorder, allOrders } = useContext(allContext);
@@ -38,10 +39,10 @@ const Orders = () => {
           <tr>
             <th className="border px-4 py-2 text-center">Order ID</th>
             <th className="border px-8 py-6 text-center">Name</th>
-            <th className="border px-4 py-2 text-center">Address</th>
+            <th className="border px-0 py-2 text-center">Address</th>
             <th className="border px-4 py-2 text-center">Items</th>
-            <th className="border px-4 py-2 text-center">Order Status</th>
-            <th className="border px-4 py-2 text-center">Total Price</th>
+            <th className="border px-2 py-2 text-center">Order Status</th>
+            <th className="border px-2 py-2 text-center">Total Price</th>
           </tr>
         </thead>
         <tbody>
@@ -59,13 +60,17 @@ const Orders = () => {
               <td className="border px-4 py-3 text-center">{order.name}</td>
 
               {/* Combine all address fields */}
-              <td className="border px-4 py-3 text-center">{order.address}</td>
+              <td className="border px-0 py-3 text-center">{order.address}</td>
 
               <td className="border px-4 py-3 text-center">
-                {order.products.length}
+                {order.products.map((eachProduct)=>{
+                 return <div className="" key={eachProduct._id}>
+                <OrderedProducts itemId={eachProduct.itemId} quantity ={eachProduct.quantity} />
+                 </div>
+                })}
               </td>
 
-              <td className="border px-4 py-3 text-center">
+              <td className="border px-2 py-3 text-center text-green-600">
                 {order.order_status}
               </td>
               <td className="border px-4 py-3 font-bold text-center">
