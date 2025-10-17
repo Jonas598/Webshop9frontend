@@ -11,9 +11,14 @@ import Login from "./components/Login.jsx";
 import AllState from "./contexts/AllState.jsx";
 import Profile from "./components/Profile.jsx";
 import Landing from "./components/Landing.jsx";
-import AdminHome from "./components/AdminHome.jsx";
-import OrderConfirmation from "./components/OrderConfirmation.jsx";
 import Orders from "./components/Orders.jsx";
+import OrderConfirmation from "./components/OrderConfirmation.jsx";
+
+// --- Admin-spezifische Imports ---
+import AdminLayout from "./components/AdminLayout.jsx";
+import AdminLogin from "./components/AdminLogin.jsx";
+import AdminHome from "./components/AdminHome.jsx";
+import AdminErrorLog from "./components/AdminErrorLog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +30,7 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "/home",
+        path: "home",
         element: <Home />,
       },
       {
@@ -49,17 +54,31 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "adminhome",
-        element: <AdminHome />,
-      },
-      {
         path: "order-success",
         element: <OrderConfirmation />,
       },
       {
         path: "orders",
         element: <Orders />,
-      }
+      },
+      {
+        path: "admin-login",
+        element: <AdminLogin />,
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "", // Erreichbar unter /admin
+        element: <AdminHome />,
+      },
+      {
+        path: "logs", // Erreichbar unter /admin/logs
+        element: <AdminErrorLog />,
+      },
     ],
   },
 ]);

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import allContext from "../contexts/allContext";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const {
     fetchUserCart,
     fetchedUserCart,
@@ -16,6 +16,8 @@ const Cart = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const [backendError, setBackendError] = useState(true);
 
   useEffect(() => {
     fetchUserCart();
@@ -46,17 +48,17 @@ const Cart = () => {
   }, [fetchedUserCart]);
 
   const orderInfo = {
-    userId: fetchedUserData._id,
-    name: fetchedUserData.name,
-    email: fetchedUserData.email,
-    address: fetchedUserData.address,
+    userId: fetchedUserData?._id,
+    name: fetchedUserData?.name,
+    email: fetchedUserData?.email,
+    address: fetchedUserData?.address,
     total_price: totalPrice.toFixed(2),
     order_status: "Confirmed",
     products: fetchedUserCart,
   };
+
   const handleCheckout = async (e) => {
     e.preventDefault();
-    console.log(orderInfo);
     await createOrder(orderInfo);
     navigate("/order-success");
   };
@@ -69,8 +71,7 @@ const Cart = () => {
         <p>Loading your cart...</p>
       ) : fetchedUserCart.length === 0 ||
         fetchedUserCart.every((item) => item.quantity === 0) ? (
-        <div className="m-20 h-60 w-45 flex items-center justify-center border rounded-lg">
-          {" "}
+        <div className="m-20 h-60 w-45 flex items-center justify-center border rounded-lg p-10">
           <p className="font-bold">Your cart is empty.</p>
         </div>
       ) : (
@@ -108,12 +109,20 @@ const Cart = () => {
             <p className="text-3xl font-bold">€ {totalPrice.toFixed(2)}</p>
           </div>
 
-          <button
-            onClick={handleCheckout}
-            className="w-full max-w-3xl mt-4 py-3 bg-black text-white font-bold text-lg rounded-lg hover:bg-gray-900 transition-colors"
-          >
-            Buy
-          </button>
+          <div className="w-full max-w-3xl mt-4">
+            {backendError ? (
+              <div className="p-3 text-center bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                <p>Purchases are currently unavailable. Please try again later.</p>
+              </div>
+            ) : (
+              <button
+                onClick={handleCheckout}
+                className="w-full py-3 bg-black text-white font-bold text-lg rounded-lg hover:bg-gray-900 transition-colors"
+              >
+                Buy
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>
