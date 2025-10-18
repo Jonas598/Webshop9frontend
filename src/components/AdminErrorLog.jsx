@@ -35,9 +35,9 @@ const AdminErrorLog = () => {
         <table className="min-w-full leading-normal">
           <thead>
             <tr className="bg-gray-200 text-left text-gray-600 uppercase text-sm">
-              <th className="py-3 px-5">Zeitstempel</th>
-              <th className="py-3 px-5">Fehlercode</th>
-              <th className="py-3 px-5">Beschreibung</th>
+              <th className="py-3 px-5">TimeStamp</th>
+              <th className="py-3 px-5">Error Code</th>
+              <th className="py-3 px-5">Description</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">

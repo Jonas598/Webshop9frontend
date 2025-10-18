@@ -31,7 +31,7 @@ const AdminLogin = () => {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Passwort
+              Password
             </label>
             <input
               id="password"
@@ -51,7 +51,7 @@ const AdminLogin = () => {
               type="submit"
               className="w-full px-4 py-2 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
             >
-              Anmelden
+              Login
             </button>
           </div>
         </form>

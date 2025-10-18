@@ -17,7 +17,7 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const [backendError, setBackendError] = useState(true);
+  const [backendError, setBackendError] = useState(false);
 
   useEffect(() => {
     fetchUserCart();
