@@ -20,7 +20,7 @@ const OrderedProducts = ({ itemId, quantity }) => {
   return <div className="flex justify-around p-1">
     <div className=" ">
       <h2 className="font-semibold text-sm">{product.name}</h2>
-      <h2 className="text-left"><sup>{product.weight} grams</sup></h2>
+      {/* <h2 className="text-left"><sup>{product.weight} grams</sup></h2> */}
     </div>
     <h2>x</h2>
     <div>

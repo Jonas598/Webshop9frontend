@@ -30,9 +30,10 @@ const AdminHome = () => {
   const [productInfo, setProductInfo] = useState({
     name: "",
     desc: "",
-    weight: 0,
+    // weight: 0,
     price: 0,
     avl_peices: 0,
+    productId:""
   });
 
   const handleOnChange = (e) => {
@@ -47,8 +48,8 @@ const AdminHome = () => {
       alert("Name Should Be More than 2 Characters");
     } else if (productInfo.desc.length < 5) {
       alert("Description Should Be 5 Characters or More!!");
-    } else if (productInfo.weight == 0) {
-      alert("Weight can't be Empty");
+    } else if (productInfo.productId <2) {
+      alert("productId can't be Empty");
     } else if (productInfo.price == 0) {
       alert("Price can't be Empty");
     } else if (productInfo.avl_peices == 0) {
@@ -89,8 +90,8 @@ const AdminHome = () => {
                 <Input id="desc" name="desc" placeholder="Enter Product Description" value={productInfo.desc} onChange={handleOnChange} type="text" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weight">Weight (in grams)</Label>
-                <Input id="weight" name="weight" type="number" min="0" placeholder="Enter Product Weight" value={productInfo.weight} onChange={handleOnChange} />
+                <Label htmlFor="productId">productId </Label>
+                <Input id="productId" name="productId" type="text" placeholder="Enter ProductID" value={productInfo.productId} onChange={handleOnChange} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="price">Price (€)</Label>
@@ -135,7 +136,7 @@ const AdminHome = () => {
                 />
                 <div className="flex-grow">
                   <h2 className="font-bold text-xl">{product.name}</h2>
-                  <p className="text-sm text-gray-500">{product.weight} grams</p>
+                  <p className="text-sm text-gray-500">{product.productId}</p>
                   <p className="text-md my-2">{product.desc}</p>
                   <p className="font-bold text-lg">€ {product.price}</p>
                   <p className="text-green-700 font-semibold">{product.avl_peices} pieces left!</p>

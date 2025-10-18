@@ -24,9 +24,10 @@ const UpdateProductModal = (props) => {
     id: product._id,
     name: product.name,
     desc: product.desc,
-    weight: product.weight,
+    // weight: product.weight,
     price: product.price,
     avl_peices: product.avl_peices,
+    productId:product.productId
   });
 
   const handleOnChange = (e) => {
@@ -77,15 +78,14 @@ const UpdateProductModal = (props) => {
           </div>
 
           <div className="*:not-first:mt-2">
-            <Label htmlFor={`weight`}>Weight (in grams)</Label>
+            <Label htmlFor={`productId`}>productId</Label>
             <Input
-              id={`weight`}
-              name="weight"
+              id={`productId`}
+              name="productId"
               className="peer pe-9"
-              type="number"
-              min="0"
-              placeholder="Enter Product Weight"
-              value={tempProductInfo.weight}
+              type="text"
+              placeholder="Enter ProductId"
+              value={tempProductInfo.productId}
               onChange={handleOnChange}
             />
           </div>

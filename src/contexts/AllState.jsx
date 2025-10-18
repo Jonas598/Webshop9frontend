@@ -10,7 +10,7 @@ export default function AllState(props) {
 
   useEffect(() => {
     getallorders();
-    fetchAllProducts();
+    // fetchAllProducts();
     fetchUserData();
   }, []);
 
@@ -58,7 +58,7 @@ export default function AllState(props) {
 
   //add Product
   const addProduct = async (productInfo) => {
-    const { name, desc, weight, price, avl_peices } = productInfo;
+    const { name, desc, productId, price, avl_peices } = productInfo;
     const apires = await fetch(`${baseUrl}/v1/api/product/addProduct`, {
       method: "POST",
       headers: {
@@ -67,7 +67,7 @@ export default function AllState(props) {
       body: JSON.stringify({
         name,
         desc,
-        weight,
+        productId,
         price,
         avl_peices,
       }),
@@ -110,7 +110,7 @@ export default function AllState(props) {
         id: productInfo.id,
         name: productInfo.name,
         desc: productInfo.desc,
-        weight: productInfo.weight,
+        productId: productInfo.productId,
         price: productInfo.price,
         avl_peices: productInfo.avl_peices,
       }),

@@ -56,9 +56,9 @@ navigate("/")
             </div>
             <div className="m-5">
               <h2 className="font-bold">{product.name}</h2>
-              <h4 className="text-sm">
+              {/* <h4 className="text-sm">
                 <sup>{product.weight} grams</sup>
-              </h4>
+              </h4> */}
               <h3 className="text-md">{product.desc}</h3>
               <div className="flex items-center justify-between">
                 <h4 className="font-bold">€ {product.price}</h4>

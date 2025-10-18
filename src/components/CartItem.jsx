@@ -38,7 +38,7 @@ const CartItem = ({ itemId, quantity }) => {
       {/* Produktinfos - Nimmt den restlichen Platz ein */}
       <div className="flex flex-col flex-grow">
         <h2 className="text-xl font-bold">{product.name}</h2>
-        <p className="text-gray-500 text-sm">{product.weight} g</p>
+        {/* <p className="text-gray-500 text-sm">{product.weight} g</p> */}
         <p className="text-green-600 font-semibold mt-1">
           {product.avl_peices} pieces left
         </p>
