@@ -139,7 +139,7 @@ const AdminHome = () => {
                   <p className="text-sm text-gray-500">{product.productId}</p>
                   <p className="text-md my-2">{product.desc}</p>
                   <p className="font-bold text-lg">€ {product.price}</p>
-                  <p className="text-green-700 font-semibold">{product.avl_peices} pieces left!</p>
+                  <p className={`${product.avl_peices < 10 ? 'text-red-500' :'text-green-700' } font-semibold`}>{product.avl_peices} pieces left!</p>
                 </div>
                 <div className="flex gap-3 mt-4">
                   <UpdateProductModal product={product} />

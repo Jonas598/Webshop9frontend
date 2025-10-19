@@ -5,12 +5,11 @@ import { MinusIcon, PlusIcon } from "lucide-react";
 import ProductCard from "./ProductCard";
 import allContext from "../contexts/allContext";
 import { useContext, useEffect, useState } from "react";
-import product from '/assets/product.png'
+import product from "/assets/product.png";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const context = useContext(allContext);
   const {
     fetchAllProducts,
@@ -28,8 +27,8 @@ const Home = () => {
     fetchAllProducts();
   }, []);
 
-  if(!localStorage.getItem("webshopAuthtoken")){
-navigate("/")
+  if (!localStorage.getItem("webshopAuthtoken")) {
+    navigate("/");
   }
 
   return (
@@ -67,41 +66,49 @@ navigate("/")
                   role="group"
                   aria-labelledby="volume-control"
                 >
-                  <Button
-                    className="rounded-lg"
-                    variant="outline"
-                    size="icon"
-                    aria-label="Decrease volume"
-                    onClick={async () => {
-                      await deleteFromCart(product._id);
-                      window.location.reload(false);
-                    }}
-                    // disabled={volume === 0}
-                  >
-                    <MinusIcon size={16} aria-hidden="true" />
-                  </Button>
-                  <div
-                    className="flex items-center px-3 text-sm font-medium tabular-nums"
-                    aria-live="polite"
-                  >
-                    {temp}
-                  </div>
-                  <Button
-                    className="rounded-lg"
-                    variant="outline"
-                    size="icon"
-                    aria-label="Increase volume"
-                    onClick={async () => {
-                      await addToCart(product._id);
-                      window.location.reload(false);
-                    }}
-                    // disabled={volume === 6}
-                  >
-                    <PlusIcon size={16} aria-hidden="true" />
-                  </Button>
+                  {product.avl_peices == 0 ? (
+                    <Button>Out of stock</Button>
+                  ) : (
+                    <>
+                      <Button
+                        className="rounded-lg"
+                        variant="outline"
+                        size="icon"
+                        aria-label="Decrease volume"
+                        onClick={async () => {
+                          await deleteFromCart(product._id);
+                          window.location.reload(false);
+                        }}
+                      >
+                        <MinusIcon size={16} aria-hidden="true" />
+                      </Button>
+                      <div
+                        className="flex items-center px-3 text-sm font-medium tabular-nums"
+                        aria-live="polite"
+                      >
+                        {temp}
+                      </div>
+                      <Button
+                        className="rounded-lg"
+                        variant="outline"
+                        size="icon"
+                        aria-label="Increase volume"
+                        onClick={async () => {
+                          await addToCart(product._id);
+                          window.location.reload(false);
+                        }}
+                      >
+                        <PlusIcon size={16} aria-hidden="true" />
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
-              <h4 className="ml-1"><sup className="text-green-700 font-semibold">{product.avl_peices} peices left !</sup></h4>
+              <h4 className="ml-1">
+                <sup className={`${product.avl_peices < 10 ? 'text-red-500' :'text-green-700' }  font-semibold`}>
+                  {product.avl_peices} peices left !
+                </sup>
+              </h4>
             </div>
           </Card>
         );

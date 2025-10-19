@@ -335,6 +335,27 @@ export default function AllState(props) {
     }
   };
 
+
+
+
+
+
+  //Fetch all Errors
+  const fetchAllErrors = async () => {
+    const apires = await fetch(`${baseUrl}/v1/api/product/fetchallerrors`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const jsonres = await apires.json();
+    if (jsonres.sucess) {
+      return jsonres.Errors;
+    } else {
+      alert(jsonres.error);
+    }
+  };
+
   return (
     <AllContext.Provider
       value={{
@@ -358,6 +379,7 @@ export default function AllState(props) {
         getallorders,
         getsingleorder,
         allOrders,
+        fetchAllErrors,
       }}
     >
       {props.children}
