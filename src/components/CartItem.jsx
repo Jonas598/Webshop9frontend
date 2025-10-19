@@ -39,8 +39,8 @@ const CartItem = ({ itemId, quantity }) => {
       <div className="flex flex-col flex-grow">
         <h2 className="text-xl font-bold">{product.name}</h2>
         {/* <p className="text-gray-500 text-sm">{product.weight} g</p> */}
-        <p className="text-green-600 font-semibold mt-1">
-          {product.avl_peices} pieces left
+        <p className={`${product.avl_peices < 10 ? 'text-red-500' :'text-green-700' }  font-semibold mt-1`}>
+          {product.avl_peices} pieces left !!
         </p>
       </div>
 

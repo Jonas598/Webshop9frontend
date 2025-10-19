@@ -6,6 +6,7 @@ import CartItem from "./CartItem";
 const Cart = () => {
   const navigate = useNavigate();
   const {
+    fetchAllProducts,
     fetchUserCart,
     fetchedUserCart,
     fetchProductById,
@@ -24,6 +25,13 @@ const Cart = () => {
     fetchUserData();
   }, []);
 
+  useEffect(()=>{
+    const temp=async()=>{
+          await fetchAllProducts();
+    };
+    temp();
+  })
+
   useEffect(() => {
     const calculateTotal = async () => {
       setLoading(true);
@@ -33,6 +41,9 @@ const Cart = () => {
           const product = await fetchProductById(item.itemId);
           if (product) {
             total += product.price * item.quantity;
+          }
+          if (product.avl_peices == 0) {
+            setBackendError(true);
           }
         }
       }
@@ -112,7 +123,9 @@ const Cart = () => {
           <div className="w-full max-w-3xl mt-4">
             {backendError ? (
               <div className="p-3 text-center bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                <p>Purchases are currently unavailable. Please try again later.</p>
+                <p>
+                  Purchases are currently unavailable. Please try Removing Unavailable Products.
+                </p>
               </div>
             ) : (
               <button
