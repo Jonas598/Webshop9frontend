@@ -17,6 +17,7 @@ const Cart = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [buyButton,setBuyButton]=useState('Buy')
 
   const [backendError, setBackendError] = useState(false);
 
@@ -70,6 +71,19 @@ const Cart = () => {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
+    setBuyButton("Please Wait ...")
+    await fetchAllProducts();
+    for (const item of fetchedUserCart) {
+        if (item.quantity > 0) {
+          const product = await fetchProductById(item.itemId);
+          if (product.avl_peices == 0) {
+            setBackendError(true);
+            window.location.reload(false);
+            return;
+          }
+        }
+      }
+      setBuyButton("Buy")
     await createOrder(orderInfo);
     navigate("/order-success");
   };
@@ -130,9 +144,9 @@ const Cart = () => {
             ) : (
               <button
                 onClick={handleCheckout}
-                className="w-full py-3 bg-black text-white font-bold text-lg rounded-lg hover:bg-gray-900 transition-colors"
+                className="w-full py-3 bg-black text-white font-bold text-lg rounded-lg hover:bg-gray-900 transition-colors cursor-pointer"
               >
-                Buy
+                {buyButton}
               </button>
             )}
           </div>
