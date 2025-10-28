@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 
 const AdminErrorLog = () => {
   const context = useContext(allContext);
-  const { fetchAllErrors } = context;
+  const { fetchAllErrors,fetchAllProducts } = context;
   const [errors, setErrors] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -13,6 +13,7 @@ const AdminErrorLog = () => {
   useEffect(() => {
     const getallErrors = async () => {
       setLoading(true);
+      fetchAllProducts();
       const fetchedErrors = await fetchAllErrors();
       setErrors(fetchedErrors);
       setErrors(errors=>errors.reverse())
