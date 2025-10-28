@@ -15,29 +15,13 @@ const AdminErrorLog = () => {
       setLoading(true);
       const fetchedErrors = await fetchAllErrors();
       setErrors(fetchedErrors);
+      setErrors(errors=>errors.reverse())
       setLoading(false);
     };
     getallErrors();
   }, []);
 
-  const sampleErrors = [
-    {
-      timestamp: new Date().toISOString(),
-      code: "DB-CONN-FAIL",
-      description: "Failed to connect to the primary database.",
-    },
-    {
-      timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-      code: "API-TIMEOUT",
-      description: "Request to payment gateway API timed out after 30 seconds.",
-    },
-    {
-      timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-      code: "AUTH-INVALID-TOKEN",
-      description:
-        "User tried to access a protected route with an invalid token.",
-    },
-  ];
+
 
   return (
     <div className="p-8">

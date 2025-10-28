@@ -17,7 +17,7 @@ const Cart = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [buyButton,setBuyButton]=useState('Buy')
+  const [buyButton, setBuyButton] = useState("Buy");
 
   const [backendError, setBackendError] = useState(false);
 
@@ -26,12 +26,12 @@ const Cart = () => {
     fetchUserData();
   }, []);
 
-  useEffect(()=>{
-    const temp=async()=>{
-          await fetchAllProducts();
+  useEffect(() => {
+    const temp = async () => {
+      await fetchAllProducts();
     };
     temp();
-  })
+  });
 
   useEffect(() => {
     const calculateTotal = async () => {
@@ -42,6 +42,10 @@ const Cart = () => {
           const product = await fetchProductById(item.itemId);
           if (product) {
             total += product.price * item.quantity;
+          } else {
+            fetchedUserCart.splice(fetchedUserCart.indexOf(item), 1)
+            setLoading(false);
+            continue;
           }
           if (product.avl_peices == 0) {
             setBackendError(true);
@@ -71,19 +75,19 @@ const Cart = () => {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
-    setBuyButton("Please Wait ...")
+    setBuyButton("Please Wait ...");
     await fetchAllProducts();
     for (const item of fetchedUserCart) {
-        if (item.quantity > 0) {
-          const product = await fetchProductById(item.itemId);
-          if (product.avl_peices == 0) {
-            setBackendError(true);
-            window.location.reload(false);
-            return;
-          }
+      if (item.quantity > 0) {
+        const product = await fetchProductById(item.itemId);
+        if (product.avl_peices == 0) {
+          setBackendError(true);
+          window.location.reload(false);
+          return;
         }
       }
-      setBuyButton("Buy")
+    }
+    setBuyButton("Buy");
     await createOrder(orderInfo);
     navigate("/order-success");
   };
@@ -138,7 +142,8 @@ const Cart = () => {
             {backendError ? (
               <div className="p-3 text-center bg-red-100 border border-red-400 text-red-700 rounded-lg">
                 <p>
-                  Purchases are currently unavailable. Please try Removing Unavailable Products.
+                  Purchases are currently unavailable. Please try Removing
+                  Unavailable Products.
                 </p>
               </div>
             ) : (
