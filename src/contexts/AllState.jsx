@@ -31,6 +31,17 @@ export default function AllState(props) {
     }
   };
 
+   const fetchERP = async () => {
+    const apires = await fetch(`${baseUrl}/v1/api/product/fetchFromERP`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+  };
+
+
   //fetch product by id
   const [singleProduct, setSingleProduct] = useState({});
   const fetchProductById = async (itemId) => {
@@ -380,6 +391,7 @@ export default function AllState(props) {
         getsingleorder,
         allOrders,
         fetchAllErrors,
+        fetchERP
       }}
     >
       {props.children}

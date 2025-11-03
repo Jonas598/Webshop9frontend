@@ -20,8 +20,13 @@ import UpdateProductModal from "./UpdateProductModal";
 const AdminHome = () => {
   const navigate = useNavigate(); // useNavigate ist schon da, perfekt!
   const context = useContext(allContext);
-  const { fetchAllProducts, fetchedAllProducts, addProduct, deleteProduct } =
-    context;
+  const {
+    fetchAllProducts,
+    fetchedAllProducts,
+    addProduct,
+    deleteProduct,
+    fetchERP,
+  } = context;
 
   useEffect(() => {
     fetchAllProducts();
@@ -33,8 +38,9 @@ const AdminHome = () => {
     // weight: 0,
     price: 0,
     avl_peices: 0,
-    productId:""
+    productId: "",
   });
+  const [fetchERPButton, setFetchERPButton] = useState("FETCH ERP");
 
   const handleOnChange = (e) => {
     setProductInfo({ ...productInfo, [e.target.name]: e.target.value });
@@ -48,7 +54,7 @@ const AdminHome = () => {
       alert("Name Should Be More than 2 Characters");
     } else if (productInfo.desc.length < 5) {
       alert("Description Should Be 5 Characters or More!!");
-    } else if (productInfo.productId <2) {
+    } else if (productInfo.productId < 2) {
       alert("productId can't be Empty");
     } else if (productInfo.price == 0) {
       alert("Price can't be Empty");
@@ -62,7 +68,9 @@ const AdminHome = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4 md:p-8">
-      <h1 className="text-center text-4xl font-bold mb-8">ADMIN CONTROL PANEL</h1>
+      <h1 className="text-center text-4xl font-bold mb-8">
+        ADMIN CONTROL PANEL
+      </h1>
 
       {/* 1. Ein Container für die Haupt-Aktionsbuttons */}
       <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
@@ -83,31 +91,73 @@ const AdminHome = () => {
               {/* --- Formular-Felder hier --- */}
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" placeholder="Enter Product Name" value={productInfo.name} type="text" onChange={handleOnChange} />
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Enter Product Name"
+                  value={productInfo.name}
+                  type="text"
+                  onChange={handleOnChange}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="desc">Description</Label>
-                <Input id="desc" name="desc" placeholder="Enter Product Description" value={productInfo.desc} onChange={handleOnChange} type="text" required />
+                <Input
+                  id="desc"
+                  name="desc"
+                  placeholder="Enter Product Description"
+                  value={productInfo.desc}
+                  onChange={handleOnChange}
+                  type="text"
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="productId">productId </Label>
-                <Input id="productId" name="productId" type="text" placeholder="Enter ProductID" value={productInfo.productId} onChange={handleOnChange} />
+                <Input
+                  id="productId"
+                  name="productId"
+                  type="text"
+                  placeholder="Enter ProductID"
+                  value={productInfo.productId}
+                  onChange={handleOnChange}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="price">Price (€)</Label>
-                <Input id="price" name="price" placeholder="Enter Product Price" value={productInfo.price} onChange={handleOnChange} type="number" min="0" />
+                <Input
+                  id="price"
+                  name="price"
+                  placeholder="Enter Product Price"
+                  value={productInfo.price}
+                  onChange={handleOnChange}
+                  type="number"
+                  min="0"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="avl_peices">Quantity</Label>
-                <Input id="avl_peices" name="avl_peices" placeholder="Enter Product Quantity" value={productInfo.avl_peices} onChange={handleOnChange} type="number" min="0" />
+                <Input
+                  id="avl_peices"
+                  name="avl_peices"
+                  placeholder="Enter Product Quantity"
+                  value={productInfo.avl_peices}
+                  onChange={handleOnChange}
+                  type="number"
+                  min="0"
+                />
               </div>
             </div>
             <DialogFooter className="border-t px-6 py-4">
               <DialogClose asChild>
-                <Button type="button" variant="outline">Cancel</Button>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
               </DialogClose>
               <DialogClose asChild>
-                <Button onClick={handleClick} type="button">Add Product</Button>
+                <Button onClick={handleClick} type="button">
+                  Add Product
+                </Button>
               </DialogClose>
             </DialogFooter>
           </DialogContent>
@@ -117,10 +167,26 @@ const AdminHome = () => {
         <Button
           variant="outline"
           className="text-lg p-6 rounded-xl"
-          onClick={() => navigate('/admin/logs')}
+          onClick={() => navigate("/admin/logs")}
         >
           Show Error Logs
         </Button>
+        <div>
+          <Button
+        className='bg-green-600 p-6 hover:bg-green-800'
+          onClick={async() => {
+            setFetchERPButton("Fetched ERP Successfully");
+            await fetchERP();
+            setTimeout(() => {
+              setFetchERPButton("FETCH ERP ");
+            }, 1000);
+            
+            window.location.reload(false);
+          }}
+        >
+          {fetchERPButton}
+        </Button>
+        </div>
       </div>
 
       {/* HIER IST DIE ÄNDERUNG: lg:grid-cols-3 wurde entfernt */}
@@ -139,7 +205,15 @@ const AdminHome = () => {
                   <p className="text-sm text-gray-500">{product.productId}</p>
                   <p className="text-md my-2">{product.desc}</p>
                   <p className="font-bold text-lg">€ {product.price}</p>
-                  <p className={`${product.avl_peices < 10 ? 'text-red-500' :'text-green-700' } font-semibold`}>{product.avl_peices} pieces left!</p>
+                  <p
+                    className={`${
+                      product.avl_peices < 10
+                        ? "text-red-500"
+                        : "text-green-700"
+                    } font-semibold`}
+                  >
+                    {product.avl_peices} pieces left!
+                  </p>
                 </div>
                 <div className="flex gap-3 mt-4">
                   <UpdateProductModal product={product} />
@@ -169,4 +243,3 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
-
